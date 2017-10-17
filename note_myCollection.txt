@@ -106,3 +106,37 @@ MyArrayList.javajava有点乱
 com.zc.test测试包
 TestMyArrayList.
 
+
+***************1.1 asList实现****************
+ @SafeVarargs
+public static <T> List<T> asList(T... a) {
+    return new ArrayList<>(a);
+}
+
+注意,产生的ArrayList不是平时见的ArrayList,而是Arrays中的一个静态内部类ArrayList
+ private static class ArrayList<E> extends AbstractList<E>
+        implements RandomAccess, java.io.Serializable
+ArrayList(E[] array) {
+    if (array==null)
+        throw new NullPointerException();
+    a = array;
+}
+
+由于该类 实现了AbstractList接口,所以在调用add()方法时,由于该类没有覆盖,则调用了AbstractList中
+的add()方法
+该方法如下
+public void add(int index, E element) {
+    throw new UnsupportedOperationException();
+}
+
+
+**************  Set ***********************
+HashSet:输出无序,因为使用散列
+TreeSet:使用红黑树实现
+LinkedHashSet:使用散列加速查询,使用链表维护元素的插入顺序
+
+
+**************ContainerMethods************
+thinkingInJava-ContainerMethods:不同集合类中方法区分
+
+

@@ -2,96 +2,129 @@ package com.zc.concurrent;
 
 import java.util.HashMap;
 import java.util.Map;
+
 //测试HashMap并发问题
-public class TestLock {
+public class TestLock
+{
 
-    private HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+    private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 
-    public TestLock() {
-        Thread t1 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+    public TestLock()
+    {
+        Thread t1 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.put(new Integer(i), i);
                 }
                 System.out.println("t1 over");
             }
         };
 
-        Thread t2 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        Thread t2 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.put(new Integer(i), i);
                 }
                 System.out.println("t2 over");
             }
         };
 
-        Thread t3 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        Thread t3 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.put(new Integer(i), i);
                 }
                 System.out.println("t3 over");
             }
         };
 
-        Thread t4 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        Thread t4 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.put(new Integer(i), i);
                 }
                 System.out.println("t4 over");
             }
         };
 
-        Thread t5 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        Thread t5 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.put(new Integer(i), i);
                 }
                 System.out.println("t5 over");
             }
         };
-//--get
-        Thread t6 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        //--get
+        Thread t6 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.get(new Integer(i));
                 }
                 System.out.println("t6 over");
             }
         };
 
-        Thread t7 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        Thread t7 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.get(new Integer(i));
                 }
                 System.out.println("t7 over");
             }
         };
 
-        Thread t8 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        Thread t8 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.get(new Integer(i));
                 }
                 System.out.println("t8 over");
             }
         };
 
-        Thread t9 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        Thread t9 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.get(new Integer(i));
                 }
                 System.out.println("t9 over");
             }
         };
 
-        Thread t10 = new Thread() {
-            public void run() {
-                for (int i = 0; i < 50000; i++) {
+        Thread t10 = new Thread()
+        {
+            public void run()
+            {
+                for (int i = 0; i < 50000; i++)
+                {
                     map.get(new Integer(i));
                 }
                 System.out.println("t10 over");
@@ -111,7 +144,8 @@ public class TestLock {
         t10.start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         new TestLock();
     }
 }
