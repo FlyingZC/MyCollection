@@ -1,4 +1,4 @@
-package com.zc;
+package com.zc.z01demo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,10 +11,16 @@ import org.junit.Test;
 /**
  * List相关api
  * thingkingInJava.holding.ListFeatures中包含list中的所有常用方法
- * @author zc
+ * @author flyingzc
  */
 public class T02List
 {
+    @Test
+    public void test01()
+    {
+        // 集合初始化时,尽量指定集合初始元素大小
+    }
+    
     @Test
     public void testCommonMethod()
     {
@@ -34,6 +40,12 @@ public class T02List
             list1.indexOf(1);
             list1.lastIndexOf(1);
             list1.retainAll(new ArrayList<Integer>());
+            
+            // ArrayList的subList()方法返回的结果不可强转为ArrayList,会抛ClassCastException
+            // 异常:java.util.RandomAccessSubList cannot be cast to java.util.ArrayList
+            // 原因:subList()方法返回的是ArrayList的内部类SubList,并不是ArrayList,它是ArraList的一个视图
+            // 对于SubList子列表的所有操作最终都会反映到原列表上
+            // 在subList使用中,对 原集合元素个数的修改,会导致子列表的遍历,增加,删除均会产生ConcurrentModifyException
             list1.subList(0, 0);
         }
     }
@@ -77,18 +89,34 @@ public class T02List
     }
 
     /**
-     * Array[] list.toArray(Array[])
+     * T[] list.toArray(T[] array)
+     * 作用:集合转数组,该方法不维护 对返回的数组的引用,即调用者可以自由的修改返回的数组.
      */
     @Test
     public void testToArray()
     {
-        List<Integer> list = new ArrayList<Integer>();
-        for (int i = 0; i < 5; i++)
-        {
-            list.add(i);
-        }
-        Integer[] arr = list.toArray(new Integer[] {11, 22, 33, 44, 55, 66, 77, 88});
-        System.out.println(Arrays.toString(arr));//[0, 1, 2, 3, 4, null, 77, 88]
+        // 1.若不使用泛型(不传入参数),只能返回Object[]数组,不能对其强转
+        List<String> list1 = Arrays.asList("1", "2", "3", "4", "5");//list1[1,2,3,4,5]
+        Object[] arr1 = list1.toArray();
+        System.out.println("arr1" + Arrays.toString(arr1));// arr1[1, 2, 3, 4, 5]
+        
+        // 2.若传入泛型数组,最好传入大小和list相同的数组
+        // 2.1传入相同大小的数组
+        String[] arr2 = list1.toArray(new String[list1.size()]);
+        System.out.println("arr2" + Arrays.toString(arr2));// arr2[1, 2, 3, 4, 5]
+        
+        // 2.2入参分配的数组空间不够大时,toArray方法内部会重新分配内存,并返回新数组地址!!!.不会截取,数组元素个数和原list相同
+        String[] arr3 = list1.toArray(new String[list1.size() - 1]);
+        System.out.println("arr3" + Arrays.toString(arr3));// arr3[1, 2, 3, 4, 5]
+        
+        // 2.3若入参的数组元素大于实际所需,下标为[list.size()]出的元素被置为null,之前的被list覆盖,后面的数组元素保持原值
+        String[] arr4 = list1.toArray(new String[] {"11", "22", "33", "44", "55", "66", "77", "88"});// 传入一个自定义的数组
+        System.out.println("arr4" + Arrays.toString(arr4));// arr4[1, 2, 3, 4, 5, null, 77, 88]
+        
+        // 2.4若传入一个和list不匹配的T[]类型
+        //Integer[] arr5 = list1.toArray(new Integer[list1.size()]);
+        //System.out.println("arr5" + Arrays.toString(arr5));//ArrayStoreException
+        
     }
 
     @Test
@@ -134,7 +162,7 @@ public class T02List
         list1.add("呵呵2");
         list1.add("呵呵3");
         list1.add("呵呵4");
-        //size()每次循环remove()都会减少1
+        // size()每次循环remove()都会减少1
         for (int i = list1.size() - 1; i >= 0; i--)
         {
             list1.remove(i);
@@ -153,9 +181,9 @@ public class T02List
         list1.add("呵呵2");
         list1.add("呵呵3");
         list1.add("呵呵4");
-        //先保留原始大小
+        // 先保留原始大小
         int orginalSize = list1.size();
-        //再每次都移除第0个元素即可,或者每次都移除最后一个元素
+        // 再每次都移除第0个元素即可,或者每次都移除最后一个元素
         for (int i = 0; i < orginalSize; i++)
         {
             list1.remove(0);
@@ -216,7 +244,7 @@ public class T02List
      * 详细参见note_myCollection 1.1asList实现
      */
     @Test
-    public void test04()
+    public void testAsList()
     {
         //注意,Arrays.asList()方法生成的list,不能改变长度.会报UnsupportedOperationException
         List<? extends Object> list1 = Arrays.asList(1, "2");
@@ -245,6 +273,15 @@ public class T02List
         //自己指定泛型类型,显式类型参数说明
         List<Super> superList3 = Arrays.<Super> asList(new Subsub());
         //而Collections.addAll(Collection<? super T> c,T... elements)方法不会存在该问题,因为该方法接收的第一个参数就是目标集合,它可以从中获取泛型信息
+    }
+    
+    @Test
+    public void testExtends() 
+    {
+        // 泛型通配符<? extends T>来接收返回的数据,此写法的泛型集合不能使用add方法
+        List<? extends Super> list1 = new ArrayList<Sub1>();
+        // list1虽然实际存储的是Sub1,但是仍然不能添加Sub1对象
+        // list1.add(new Sub1());
     }
 
 }

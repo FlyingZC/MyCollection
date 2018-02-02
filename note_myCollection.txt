@@ -1,3 +1,17 @@
+********************
+一.包说明
+160912
+0.com.zc.z01demo:所有demo
+
+1.com.zc.my自己实现
+MyArrayList.java有点乱
+
+2.com.zc.test测试包
+TestMyArrayList
+
+
+
+*****************************
 160815
 set没有get(index)方法.(无序?)
 
@@ -96,16 +110,6 @@ jdk
         }
     }
       
-
-****自己实现****
-160912
-com.zc.my
-MyArrayList.javajava有点乱
-
-
-com.zc.test测试包
-TestMyArrayList.
-
 
 ***************1.1 asList实现****************
  @SafeVarargs

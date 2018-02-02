@@ -17,8 +17,8 @@ public class PropertiesUtil
         Properties props = new Properties();
         try
         {
-            String rootPath=PropertiesUtil.class.getClassLoader().getResource("//").getPath();
-            props.load(new FileInputStream(rootPath + "oracle.properties"));
+            String rootPath=PropertiesUtil.class.getClassLoader().getResource("oracle.properties").getPath();
+            props.load(new FileInputStream(rootPath));
             for(Map.Entry<Object, Object> every : props.entrySet())
             {
                 cachMap.put((String)every.getKey(), (String)every.getValue());

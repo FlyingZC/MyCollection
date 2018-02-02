@@ -1,4 +1,4 @@
-package com.zc;
+package com.zc.z01demo;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,6 +8,12 @@ import java.util.TreeSet;
 
 import org.junit.Test;
 
+import com.zc.Person;
+
+/**
+ * @author flyingzc
+ * Set可快速对一个集合进行去重操作
+ */
 public class T03Set
 {
     @Test
