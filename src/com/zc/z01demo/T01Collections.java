@@ -73,5 +73,43 @@ public class T01Collections
     {
 
     }
+    
+    /**
+     * sort的几种方式 
+     */
+    @Test
+    public void testSort()
+    {
+        String[] s1 = new String[10];
+        Arrays.sort(s1);//对Object[]类型 进行排序
 
+        List<String> list1 = new ArrayList<String>();
+        Collections.sort(list1);
+
+        int[] a = new int[10];
+        Arrays.sort(a);
+    }
+
+    /**
+     * ArrayList有关null的测试
+     */
+    @Test
+    public void testNull()
+    {
+        List<String> s = new ArrayList<String>();
+        //集合起初为null,但不包含"null" 任何引用类型均可赋值为null
+        System.out.println(s.contains(null));//false.期初不包含null值
+        s.add(null);//添加null值(即 空值)
+        System.out.println(s.contains(null));//true
+
+        List<Object> list2 = new ArrayList<Object>();
+        System.out.println(list2.contains(null));//false
+        list2.add(null);
+        System.out.println(list2.contains(null));//true
+
+        List<Integer> list3 = new ArrayList<Integer>();
+        System.out.println(list3.contains(null));//false
+        list3.add(null);
+        System.out.println(list3.contains(null));//true
+    }
 }
